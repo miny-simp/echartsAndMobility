@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div id="mapBox" class="map-content"></div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      var itemArr1 = ["大型车","小型车","摩托车","低速车","其他"];
+      var dataArr1 = [20,34,56,67,100];
+      var peiColorArr1 = ['174,84,57','97,64,111','5,242,128','32,81,150','165,202,76'];
+      var itemArr2 = ["男","女"];
+      var dataArr2 = [20,80];
+      var peiColorArr2 = ['200,160,64','81,142,106'];
+      var data1 = getDataArr(itemArr1,dataArr1,peiColorArr1);
+      var data2 = getDataArr(itemArr2,dataArr2,peiColorArr2);
+      var opt = {
+        "center":['50%','50%'],
+        "showTitle":false,
+        "title":"",
+        "showLegend":false,
+        "seriesName":"机动车",
+        "seriesName2":"驾驶证",
+        "lb":false
+      };
+      createRingChartWithNum("mapBox",data1,data2,opt);
+    })
+    var _fontSize = 14;
+    /**
+     * 带阴影的圆环统计图 显示类目数值和百分比的
+     * @param {String} id 容器id
+     * @param {Array} dataArr 外圈数据
+     * @param {Array} dataArr2 内圈阴影数据及样式
+     **/
+    function createRingChartWithNum(id,dataArr,dataArr2,style){
+        var opt = {
+            "center":['50%','50%'],
+            "showTitle":false,
+            "title":"",
+            "showLegend":true,
+            "seriesName":"占比统计",
+            "seriesName2":"人员标签",
+            "lb":false    //轮播
+        };
+        $.extend(true, opt, style);
+        echarts.dispose(document.getElementById(id));
+        var myChart = echarts.init(document.getElementById(id));
+        var option = {
+            title:{
+                show:opt.showTitle,
+                text:opt.title,
+                right:'10%',
+                textStyle:{
+                    fontSize:_fontSize,
+                    color:'#e08f2c',
+                    align:'center'
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)",
+                textStyle: {
+                    fontSize: 14,
+                    color: '#fff'
+                },
+                padding: 12,
+                borderWidth: 2,
+                borderColor: 'rgba(110,138,203,0.5)',
+                borderRadius: 10
+            },
+            legend: {
+              show:opt.showLegend,
+                orient: 'vertical',
+                x: 'left',
+                data:[dataArr2[0].name,dataArr2[1].name],
+                textStyle: {
+                    fontSize: _fontSize,
+                    color: '#ffffff'
+                }    
+            },
+            series: [
+                {
+                    name:opt.seriesName2,
+                    type:'pie',
+                    center:opt.center,
+                    selectedMode: 'single',
+                    radius: [0, '25%'],
+                    label: {
+                        normal: {
+                            position: 'inner',
+                            formatter: '{d}%',
+                            fontSize: _fontSize
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:dataArr2
+                },
+                {
+                    name:opt.seriesName,
+                    type:'pie',
+                    center:opt.center,
+                    radius: ['35%', '55%'],
+                    avoidLabelOverlap: true,
+                    hoverAnimation:true,
+                    hoverOffset:8,
+                    itemStyle :　{
+                        normal : {
+                            label : {
+                                show : true,
+                                textStyle : {
+                                    color : '#fff',
+                                    align : 'center',
+                                    baseline : 'bottom',
+                                    fontFamily : 'Microsoft YaHei',
+                                    fontSize : _fontSize
+                                },
+                                formatter: "{per|{d}%} \n{hr|}{b|{b}}",
+                                rich: {
+                                    per: {//百分比
+                                        color: '#fff',
+                                        fontSize: _fontSize,
+                                        fontFamily : 'Microsoft YaHei',
+                                        lineHeight: 20,
+                                        align: 'left'
+                                    },
+                                    hr: {
+                                        backgroundColor: '#62af81',
+                                        width: 14,
+                                        height: 14,
+                                        align: 'left'
+                                    },
+                                    b: {
+                                        color: '#fff',
+                                        fontSize: _fontSize,
+                                        fontFamily : 'Microsoft YaHei',
+                                        lineHeight: 20,
+                                        padding:[0,0,0,5],
+                                        align: 'left'
+                                    }
+                                }
+                            },
+                            labelLine : {
+                                show : true,
+                                length : 10,
+                                length2 : 25,
+                                lineStyle : {
+                                    color : 'rgba(255,255,255,0.5)',
+                                    width : 2,
+                                    type : 'solid'
+                                }
+                            }
+                        }
+                    },
+                    data:dataArr
+                }
+            ]
+        };
+        myChart.setOption(option);
+        if (opt.lb){
+          /*
+            * 设置浮动框轮播
+            */
+          var timeTicket = null;
+          timeTicket && clearInterval(timeTicket);
+          var count=0;
+          var num = dataArr.length;
+          timeTicket = setInterval(function() {
+              myChart.dispatchAction({
+                  type: 'downplay',
+                  seriesIndex: 2
+              });
+              myChart.dispatchAction({
+                  type: 'highlight',
+                  seriesIndex: 2,
+                  dataIndex: count % num
+              });
+              /* myChart.dispatchAction({
+                  type: 'showTip',
+                  seriesIndex: 0,
+                  dataIndex: count % num
+              });*/
+              count++;
+          }, 3000);
+        }
+        
+    }
+    
+    /**
+     * 获取外圈数据数及样式
+     * @param {Array} itemArr 类目数据
+     * @param {Array} dataArr 数据值
+     * @param {Array} colorArr 颜色
+     */
+    function getDataArr(itemArr,dataArr,colorArr){
+        var sb = [];
+        var c = colorArr.length;
+        for(var i=0;i<itemArr.length;i++){
+            var obj = {};
+            obj.value=dataArr[i];
+            obj.name=itemArr[i];
+            var n = i%c;
+            obj.itemStyle={
+                normal:{
+                    color:'rgba('+colorArr[n]+',1)',
+                    label:{
+                        rich:{
+                            hr:{
+                                backgroundColor:'rgba('+colorArr[n]+',1)'
+                            }
+                        }
+                    }
+                }
+            }
+            sb.push(obj);
+        }
+        return sb;
+    }
+
+  </script>
+  </html>
