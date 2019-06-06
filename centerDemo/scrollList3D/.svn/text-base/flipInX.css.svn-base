@@ -1,0 +1,113 @@
+/*翻转*/
+@keyframes flipInX {
+  from {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  to {
+    transform: perspective(400px);
+  }
+}
+
+.flipInX {
+  backface-visibility: visible !important;
+  animation-name: flipInX;
+}
+
+/*列表*/
+.listcont{
+  width:500px;
+  height:500px;
+  margin:150px auto;
+}
+.lightLine_list>li{
+  color:#fff;
+  border-bottom:2px solid rgba(0,129,255,0.3);
+  position: relative;
+}
+.lightLine_list>li p{
+  padding:10px 0px 8px;
+}
+.lightLine_list>li .lightLine{
+  position: relative;
+  top:2px;
+  height:4px;
+  width: 100%;
+  background:rgba(0,129,255,1);
+  overflow: hidden;
+}
+.lightLine_list>li:nth-child(2) .lightLine{
+  width: 90%;
+}
+.lightLine_list>li:nth-child(3) .lightLine{
+  width: 80%;
+}
+.lightLine_list>li:nth-child(4) .lightLine{
+  width: 70%;
+}
+.lightLine_list>li:nth-child(5) .lightLine{
+  width: 60%;
+}
+.lightLine_list>li .lightLine:after{
+  content:'';
+  position: absolute;
+  top:0px;
+  left:-20%;
+  width: 15%;
+  height:100%;
+  background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,0.5),rgba(255,255,255,0));
+  -webkit-animation:animations 3s ease infinite;
+  -moz-animation:animations 3s ease infinite;
+  animation:animations 3s ease infinite;
+}
+.lightLine_list>li:nth-child(2) .lightLine:after{
+  -webkit-animation:animations 3s ease 0.1s infinite;
+  -moz-animation:animations 3s ease 0.1s infinite;
+  animation:animations 3s ease 0.1s infinite;
+}
+.lightLine_list>li:nth-child(3) .lightLine:after{
+  -webkit-animation:animations 3s ease 0.2s infinite;
+  -moz-animation:animations 3s ease 0.2s infinite;
+  animation:animations 3s ease 0.2s infinite;
+}
+.lightLine_list>li:nth-child(4) .lightLine:after{
+  -webkit-animation:animations 3s ease 0.3s infinite;
+  -moz-animation:animations 3s ease 0.3s infinite;
+  animation:animations 3s ease 0.3s infinite;
+}
+.lightLine_list>li:nth-child(5) .lightLine:after{
+  -webkit-animation:animations 3s ease 0.4s infinite;
+  -moz-animation:animations 3s ease 0.4s infinite;
+  animation:animations 3s ease 0.4s infinite;
+}
+@-webkit-keyframes animations{
+    0% { left:-20%; }
+  20% { left:120%; }
+  100% { left:120%; }
+}
+@-moz-keyframes animations{
+    0% { left:-20%; }
+  20% { left:120%; }
+  100% { left:120%; }
+} 
+@keyframes animations{
+  0% { left:-20%; }
+  20% { left:120%; }
+  100% { left:120%; }
+}

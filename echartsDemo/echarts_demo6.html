@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div id="mapBox" class="map-content"></div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      var itemData=["显示辖区","显示辖区","显示辖区","显示辖区","显示辖区","显示辖区"];
+      var valData_man=[280, 80, 100, 195, 189, 101];
+      var valData_woman=[180, 180, 80, 95,289,89];
+      var opt={
+        "len":2,//换行字数
+        "legend":['男性','女性'],
+        "showLegend":true,
+        "colorArr":[
+          ["#8696f5","#89f7fc"],
+          ["#edb421","#fcea7f"]
+        ]
+      }
+      create_DT_Bar("mapBox",itemData, [valData_man, valData_woman],opt);
+
+    })
+    var _fontSize = 14;
+    // 带背景的堆叠柱状图
+    function create_DT_Bar(id,itemData, valData, style){
+      echarts.dispose(document.getElementById(id));
+      var myChart = echarts.init(document.getElementById(id));
+      var option = create_DT_Bar_option(itemData, valData, style);
+      myChart.setOption(option);
+    }
+
+    // 生成堆叠柱状图option对象
+    function create_DT_Bar_option(itemData, valData, style){
+      var opt={
+        "len":0,
+        "showTitle":false,
+        "title":"",
+        "legend":[],
+        "barWidth":'30%',
+        "showLegend":false,
+        "dd":false,//是否堆叠
+        "colorArr":[
+            ["#9cebe5","#0ec8b6"],
+            ["#eeb48b","#e16f22"],
+            ["#c04766","#d76d72"],
+            ["#2dc6b2","#fdf189"]
+        ]
+      };
+      $.extend(true, opt, style);
+      var option = {
+        tooltip : {
+            show: true,
+            trigger: 'axis',
+            axisPointer: {
+                lineStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 1,
+                        color: 'rgba(122,154,227,0.5)'
+                    }, {
+                        offset: 0.5,
+                        color: 'rgba(115,207,218,0.5)'
+                    }], false),
+                    width: 1
+                }
+            },
+            textStyle: {
+                fontSize: _fontSize,
+                color: '#fff'
+            },
+            padding: 8,
+            borderWidth: 2,
+            borderColor: 'rgba(110,138,203,0.5)',
+            borderRadius: 5/*,
+            formatter: '{b}：{c1}'*/
+        },
+        legend: {
+            show: opt.showLegend,
+            data: opt.legend,
+            textStyle:{
+                fontSize: _fontSize,
+                color:'#ffffff'
+            },
+            right: '1%'
+        },
+        grid: {
+            top: '25%',
+            left: '3%',
+            right: '4%',
+            bottom: '2%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                splitArea:{show:false},
+                axisLabel:{
+                    textStyle:{
+                        fontSize:_fontSize,
+                        color:'#fff'
+                    },
+                    formatter: function (value, index) {
+                    if(opt.len>0){
+                        var names=value.split("");
+                        var texts=[];
+                        for(var i=0;i<names.length;i++){
+                            var n = i%opt.len;
+                            if(i>0&&n==0){
+                                texts.push("\n");
+                            }
+                            texts.push(names[i]);
+                        }
+                        return texts.join('');
+                    }else{
+                        return value;
+                    }
+                }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        width: 2,
+                        color: 'rgba(255,255,255,.3)'
+                    }
+                },
+                data : itemData
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                max:'dataMax',
+                splitArea:{show:false},
+                splitLine:{show:false},
+                axisLabel:{
+                    textStyle:{
+                        fontSize:_fontSize,
+                        color:'#fff'
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        width: 2,
+                        color: 'rgba(255,255,255,.3)'
+                    }
+                },
+            }
+        ],
+        series :getBarSeries(valData,opt)
+      };
+      return option;
+    }
+    
+    function getBarSeries(dataArr,opt){
+        var sb = [];
+        var legend = opt.legend;
+        var colorArr = opt.colorArr;
+        for(var i=0;i<dataArr.length;i++){
+            var name ='';
+            if(opt.showLegend==true){
+                name = legend[i];
+            }
+            var obj={
+                name: name,
+                type: 'bar',
+                barWidth : opt.barWidth,
+                barGap:'0%',
+                itemStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                {offset: 1, color: colorArr[i][0]},
+                                {offset: 0, color: colorArr[i][1]}
+                            ]
+                        )
+                    }
+                },
+                data: dataArr[i]
+            }
+            if(!isNull(opt.dd)){
+                obj.stack="堆叠";
+            }
+            sb.push(obj);
+        }
+        return sb;
+    }
+
+    //判断变量是否为空
+    function isNull(inVariable){
+      if(typeof inVariable=='undefined'||inVariable == "" || inVariable == "null" || inVariable==null){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
+  </script>
+  </html>

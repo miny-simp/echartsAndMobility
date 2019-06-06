@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      .catch-list {
+        display: flex;
+        margin-top: 1.8rem;
+      }
+      .catch-list li {
+        width: 30%;
+        text-align: center;
+      }
+      .catch-list-circel {
+        position: relative;
+        width: 5.6rem;
+        height: 5.6rem;
+        border: 0.14rem solid #5780fd;
+        border-radius: 50%;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+      .cilcle-blue {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        background: linear-gradient(to top, #869bf5, #89ebfb);
+        margin: 0.16rem;
+      }
+      .cilcle-auto {
+        width: 5rem;
+        height: 5rem;
+        /* border-radius: 50%;
+        margin: 0.14rem auto;
+        overflow: hidden; */
+      }
+      .square-auto {
+        width: 5rem;
+        height: 5rem;
+        background: #17202f;
+      }
+      .circle-pert {
+        position: absolute;
+        left: 1.6rem;
+        top: 1.8rem;
+        font-family: "迷你简汉真广标";
+        color: #fcd357;
+        text-align: center;
+        text-shadow: 1px 1px #192332;
+      }
+      .catch-list-count {
+        margin: 0.3rem 0;
+      }
+      .catch-list-count span {
+        color: #fcd357;
+        font-family: "迷你简汉真广标";
+      }
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <ul class="catch-list">
+        <li>
+          <div id="cczsCharts"></div>
+          <p class="catch-list-count"><span>9832/</span>10032</p>
+          <p>存储总数</p>
+        </li>
+        <li>
+          <div id="nczsCharts"></div>
+          <p class="catch-list-count"><span>9832/</span>10032</p>
+          <p>内存总数</p>
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+	<script src="../echart/echarts.js"></script>
+	<script src="../echart/echarts-liquidfill.js"></script>
+  <script>
+    $(function() {
+      $('#cczsCharts').height('6.6rem');
+      $('#nczsCharts').height('6.6rem');
+      createChart3('cczsCharts', '0.6');
+      createChart3('nczsCharts', '0.45');
+    })
+
+    // 小水滴百分比
+    function createChart3(id, count) {
+      var options = {
+        series: [{
+          type: 'liquidFill',
+          data: [count],
+          name: '存储总数',
+          center: ['50%', '50%'],
+          radius: '85%',
+          itemStyle: {
+            color: '#87b4f7',
+            opacity: 0.8
+          },
+          backgroundStyle: {
+            color: '#17202f'
+          },
+          label: {
+            fontSize: 16,
+            color: '#87b4f7'
+          },
+          outline: {
+            borderDistance: 3,
+            itemStyle: {
+              borderWidth: 2,
+              borderColor: '#5780fd',
+              shadowBlur: 1,
+              shadowColor: '#869bf5'
+            }
+          }
+        }],
+        tooltip: {
+          show: true
+        }
+      };
+      var chart = echarts.init(document.getElementById(id));
+      chart.setOption(options);
+    }
+  </script>
+  </html>

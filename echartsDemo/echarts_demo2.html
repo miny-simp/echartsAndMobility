@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" />
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+    .yjsj-list {
+      /* margin: 2rem 1.5rem 0 1.5rem; */
+      margin: 2rem 1.5rem 1rem 1.5rem;
+      height: 7.3rem;
+      overflow-y: scroll;
+    }
+    .yjsj-list li {
+      display: flex;
+      font-family: "迷你简汉真广标";
+      font-size: 0.75rem;
+      padding-bottom: 0.6rem;
+    }
+    /* .yjsj-list-tile {
+      width: 22%;
+    } */
+    .yjsj-list-progress {
+      width: 54%;
+      margin: 0 1.1rem;
+    }
+    /* .yjsj-list-count {
+      width: 20%;
+    } */
+    .yjsj-list-count-num {
+      margin-left: 0.5rem;
+      cursor: pointer;
+    }
+    .layui-progress {
+      height: 0.6rem;    
+      margin-top: 0.38rem;
+      background: linear-gradient(left, white 0%, rgba(158, 163, 170, 0.7) 30%, rgba(92, 99, 110, 0.4) 70%, rgba(61, 69, 83, 0.2) 100%);
+      background: -ms-linear-gradient(left, white 0%, rgba(158, 163, 170, 0.7) 30%, rgba(92, 99, 110, 0.4) 70%, rgba(61, 69, 83, 0.2) 100%);
+      background: -webkit-linear-gradient(left, white 0%, rgba(158, 163, 170, 0.7) 30%, rgba(92, 99, 110, 0.4) 70%, rgba(61, 69, 83, 0.2) 100%);
+      background: -moz-linear-gradient(left, white 0%, rgba(158, 163, 170, 0.7) 30%, rgba(92, 99, 110, 0.4) 70%, rgba(61, 69, 83, 0.2) 100%);
+    }
+    .layui-progress-bar {
+      height: 0.6rem;
+      background-color: #79dcc5;
+    }
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <ul class="yjsj-list" id="yjsjtjToday">
+        <!-- <li>
+          <div class="yjsj-list-tile">网吧预警</div>
+          <div class="yjsj-list-progress">
+            <div class="layui-progress">
+              <div class="layui-progress-bar" lay-percent="20%"></div>
+            </div>
+          </div>
+          <div class="yjsj-list-count">
+            <img src="img/left_03_img.png" alt="">
+            <span class="yjsj-list-count-num">1284</span>
+          </div>
+        </li> -->
+      </ul>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../layui/layui.all.js" ></script>
+  <script>
+    var element = '';
+    layui.use(['element'], function(){
+      element = layui.element;
+    });
+    $(function() {
+      var dataList1 = [
+        {'name': '网吧预警','num':'600'},
+        {'name': '旅馆预警','num':'300'},
+        {'name': '车站预警','num':'700'},
+        {'name': 'WiFi预警','num':'900'},
+        {'name': '铁路预警','num':'400'}
+      ],
+      dataList2 = [
+        {'name': '网吧预警','num':'900'},
+        {'name': '旅馆预警','num':'1000'},
+        {'name': '车站预警','num':'800'},
+        {'name': 'WiFi预警','num':'1800'},
+        {'name': '铁路预警','num':'1200'}
+      ],
+      dataList = dataList1,
+      id = 'yjsjtjToday';
+      var sb = [],
+      t = '',
+      count = '';
+      for(var i = 0; i < dataList.length; i++) {
+        t = dataList[i];
+        count = parseInt(t.num/1284*100);
+        sb.push('<li>');
+        sb.push('<div class="yjsj-list-tile">'+t.name+'</div>');
+        sb.push('<div class="yjsj-list-progress">');
+        sb.push('<div class="layui-progress">');
+        sb.push('<div class="layui-progress-bar" lay-percent="'+count+'%"></div>');
+        sb.push('</div></div>');
+        sb.push('<div class="yjsj-list-count">');
+        sb.push('<img src="img/left_03_img.png" alt="">');
+        sb.push('<span class="yjsj-list-count-num">1284</span>');
+        sb.push('</div>');
+        sb.push('</li>');
+      }
+      $("#"+id).html(sb.join(""));
+      element.render('progress');
+      
+    })
+
+    
+  </script>
+  </html>

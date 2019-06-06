@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>大屏动效</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/centerPop.css" />
+	</head>
+	<body style="background: #0A203C;">
+		<div style="width:1590px;height:1100px;margin:0 auto;">
+			<div class="main-center mysq" >
+				<img src="img/circle/main-circle-bg.png" style="margin-top:100px;"/>
+				<ul class="bg-box">
+					<li>
+						<img src="img/circle/1.png">
+					</li>
+					<li>
+						<img src="img/circle/2.png">
+					</li>
+					<li>
+						<img src="img/circle/3.png">
+					</li>
+					<li>
+						<img src="img/circle/4.png">
+					</li>
+					<li>
+						<img src="img/circle/6.png">
+					</li>
+					<li>
+						<img src="img/circle/bg0.png">
+					</li>
+					<li>
+						<img src="img/circle/5.png">
+					</li>
+					<li class="goodrate" style="margin-top:-30px;">
+						<p class="rate-num animatefont" id="center_a">-亿</p>
+						<p class="rate-num animatefont" id="center_b">-万</p>
+						<p class="rate-num animatefont" id="center_c">-</p>
+						<p>累计为<br>前方推送数据</p>
+					</li>
+				</ul>
+				<ul class="floatBtn-list" id="floatBtn-list">
+					<li class="child1">
+						<span class="floatBtnBg on">
+							<i class="text">苏州</i>
+						</span>
+						<div class="line-box">
+							<p class="line">
+						</div>
+					</li>
+					<li class="child3">
+						<span class="floatBtnBg">
+							<i class="text">太仓</i>
+						</span>
+						<div class="line-box">
+							<p class="line">
+						</div>
+					</li>
+					<li class="child4">
+						<span class="floatBtnBg">
+							<i class="text">昆山</i>
+						</span>
+						<div class="line-box">
+							<p class="line">
+						</div>
+					</li>
+					<li class="child5">
+						<span class="floatBtnBg on">
+							<i class="text">南通</i>
+						</span>
+						<div class="line-box">
+							<p class="line">
+						</div>
+					</li>
+					<li class="child6">
+						<span class="floatBtnBg">
+							<i class="text">海门</i>
+						</span>
+						<div class="line-box">
+							<p class="line">
+						</div>
+					</li>
+					<li class="child8">
+						<span class="floatBtnBg">
+							<i class="text">启东</i>
+						</span>
+						<div class="line-box">
+							<p class="line">
+						</div>
+					</li>
+				</ul>
+				<div class="lights-box">
+					<ul>
+						<li></li><li></li><li></li><li></li><li></li><li></li>
+					</ul>
+					<ul>
+						<li></li><li></li><li></li><li></li><li></li><li></li>
+					</ul>
+					<ul>
+						<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+					</ul>
+					<ul>
+						<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+					</ul>
+					<ul>
+						<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script>
+		centerNumInterval();
+		var currentNum = 113021275;
+		function centerNumInterval(){
+			var his = sessionStorage.getItem("centerData");
+			if(his){
+				currentNum=parseInt(his);
+			}else{
+				sessionStorage.setItem("centerData",currentNum);
+			}
+			setInterval(function(){
+				var c = Math.floor(Math.random()*10+30);
+				//console.log(c);
+				currentNum+=c;
+				sessionStorage.setItem("centerData",currentNum);
+				initCenter();
+			},2000);
+		}
+		function initCenter(){
+			var his = sessionStorage.getItem("centerData");
+			if(his){
+				currentNum=parseInt(his);
+			}else{
+				//sessionStorage.setItem("centerData",currentNum);
+			}
+			var str = ""+currentNum;
+			var len = str.length;
+			var a = str.substring(0,len-8);
+			var b = str.substring(len-8,len-4);
+			var c = str.substring(len-4,len);
+			$("#center_a").html(a+"亿");
+			$("#center_b").html(b+"万");
+			$("#center_c").html(c);
+		}
+	</script>
+</html>

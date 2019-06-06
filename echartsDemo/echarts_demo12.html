@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div id="mapBox" class="map-content"></div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      var itemData=["显示派出所", "显示派出所", "显示派出所", "显示派出所", "显示派出所", "显示派出所", "显示派出所"];
+      var seriesData = {
+        "valData1":['280', '80', '100', '195', '189', '95','200'],
+        "valData2":['180', '180', '80', '95','289', '100', '195']
+      }
+      var opt={
+        "len":2,//换行字数
+        "legend":["上月", "本月"],
+        "showLegend":true,
+        "barWidth":'40%',
+        "dataCount": [500,500,500,500,500,500,500],
+        "colorArr":[
+          ["#8696f5","#89f7fc"],
+          ["#edb421","#fcea7f"]
+        ]
+      }
+      create_DT_HX_Bar("mapBox",itemData,seriesData, opt);
+    })
+
+    var _fontSize = 14;
+    // 横向堆叠柱状图
+    function create_DT_HX_Bar(id,itemData, seriesData, style){
+      echarts.dispose(document.getElementById(id));
+      var myChart = echarts.init(document.getElementById(id));
+      var option = create_DT_HX_Bar_option(itemData, seriesData, style);
+      myChart.setOption(option);
+    }
+    function create_DT_HX_Bar_option(itemData, seriesData, style){
+      var opt={
+          "len":0,
+          "showTitle":false,
+          "title":"",
+          "legend":[],
+          "barWidth":'30%',
+          "showLegend":false,
+          "dd":false,//是否堆叠
+          "dataCount": [],
+          "colorArr":[
+              ["#9cebe5","#0ec8b6"],
+              ["#eeb48b","#e16f22"],
+              ["#c04766","#d76d72"],
+              ["#2dc6b2","#fdf189"]
+          ]
+      };
+      $.extend(true, opt, style);
+      var option = {
+          tooltip: { //鼠标悬浮时显示的信息
+              show: true,
+              trigger: 'axis',
+              axisPointer: {
+                  lineStyle: {
+                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 1,
+                          color: 'rgba(122,154,227,0.5)'
+                      }, {
+                          offset: 0.5,
+                          color: 'rgba(115,207,218,0.5)'
+                      }], false),
+                      width: 1
+                  }
+              },
+              textStyle: {
+                  fontSize: _fontSize,
+                  color: '#fff'
+              },
+              padding: 6,
+              borderWidth: 2,
+              borderColor: 'rgba(110,138,203,0.5)',
+              borderRadius: 5,
+              formatter: function(item) {
+                  var circle = '';
+                  var sb = [];
+                  for(var i = 1; i < item.length; i++) {
+                      var t = item[i];
+                      if(i == 1) {
+                          sb.push(t.name);
+                      }
+                      var color = t.color.colorStops[1].color;
+                      sb.push('<br/>');
+                      sb.push('<span style="display:inline-block;width:10px;height:10px;margin-right:10px;background:' + color + ';border-radius:50%;"></span>');
+                      sb.push(t.seriesName + "：" + t.value);
+                  }
+                  return sb.join('');
+              }
+          },
+          legend: {
+              show: opt.showLegend,
+              data: opt.legend,
+              top: 0,
+              right: 15,
+              z: 2,
+              itemHeight: 10,
+              textStyle: {
+                  color: '#ffffff',
+                  fontSize: _fontSize
+              },
+          },
+          grid: {
+              top: '14%',
+              left: '5%',
+              right: '5%',
+              bottom: '0%',
+              containLabel: true
+          },
+          xAxis: [{
+              type: 'value',
+              max: 'dataMax',
+              splitArea: {
+                  show: false
+              },
+              splitLine: {
+                  show: false
+              },
+              axisLabel: {
+                  show: false
+              },
+              axisLine: {
+                  show:false
+              },
+              axisTick: {
+                  show: false
+              }
+          }],
+          yAxis: [{
+              type: 'category',
+              splitArea: {
+                  show: false
+              },
+              axisLabel: {
+                  textStyle: {
+                      color: '#ffffff',
+                      fontSize: opt.lableSize
+                  }
+              },
+              axisLine: {
+                  show: false
+              },
+              data: itemData
+          },
+          {
+              type: 'category',
+              splitArea: {
+                  show: false
+              },
+              axisLabel: {
+                  textStyle: {
+                      color: '#ffffff',
+                      fontSize: opt.lableSize
+                  }
+              },
+              axisLine: {
+                  show: false
+              },
+              data: opt.dataCount
+          }],
+          series: [
+              { //阴影
+                  type: 'bar',
+                  itemStyle: {
+                      normal: {
+                          color: 'rgba(38,39,51,0.5)',
+                          borderColor: '#2d93be',
+                          borderWidth: 1,
+                          barBorderRadius: 20
+                      }
+                  },
+                  barWidth: '60%',
+                  barGap: '-85%',
+                  // data: getShadowData([seriesData]),
+                  data: opt.dataCount,
+                  animation: true
+              }, {
+                  name: opt.legend[0],
+                  type: 'bar',
+                  barWidth: '40%',
+                  stack: '堆叠',
+                  data: seriesData.valData1,
+                  itemStyle: {
+                      normal: {
+                          barBorderRadius: [5, 0, 0, 5],
+                          color: new echarts.graphic.LinearGradient(
+                              0, 0, 0, 1, [{
+                                      offset: 0,
+                                      color: '#60efea'
+                                  },
+                                  {
+                                      offset: 1,
+                                      color: '#6f85fa'
+                                  }
+                              ]
+                          )
+
+                      }
+                  }
+              }
+              ,{
+                  name: opt.legend[1],
+                  type: 'bar',
+                  stack: '堆叠',
+                  data: seriesData.valData2,
+                  itemStyle: {
+                      normal: {
+                          barBorderRadius: [0, 5, 5, 0],
+                          color: new echarts.graphic.LinearGradient(
+                              0, 0, 0, 1, [{
+                                      offset: 0,
+                                      color: '#84f2e7'
+                                  },
+                                  {
+                                      offset: 1,
+                                      color: '#45d3c4'
+                                  }
+                              ]
+                          )
+                      }
+                  }
+              }
+          ],
+          animationEasing:'quadraticIn'
+      };
+      return option;
+    }
+  </script>
+  </html>

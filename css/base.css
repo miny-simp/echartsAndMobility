@@ -1,0 +1,402 @@
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd {
+	/* 默认有边距，都要清除 */
+	margin: 0;
+	padding: 0;
+	/*字体设置*/
+	font-size: 14px;
+	font-family: "Microsoft Yahei", sans-serif;
+	color:#fff;
+	/* 去掉列表的原点 */
+	list-style: none;
+	/* 默认鼠标 */
+	/*cursor: default;*/
+}
+/*行内块元素*/
+input {
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+	outline-style: none;
+	vertical-align: bottom;
+}
+/*行内元素*/
+a,
+a:active,
+a:visited {
+	/*下划线和颜色*/
+	text-decoration: none;
+	color: #ccc;
+}
+textarea {
+	/* 边框清零 */
+	border: none;
+	/* 轮廓线清零 */
+	outline: none;
+	/* 防止文本域被随意拖拽 */
+	resize: none;
+}
+i, em {
+	/*文字样式*/
+	font-style: normal;
+}
+table {
+	/*边框合并*/
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* 使用伪元素清除浮动 */
+.clearfix::before,
+.clearfix::after {
+	content: "";
+	height: 0;
+	line-height: 0;
+	display: block;
+	visibility: none;
+	clear: both;
+}
+.clearfix {
+	*zoom: 1;
+}
+.clear {
+	clear: both;
+}
+/* 自定义 minzz*/
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.tac{
+    text-align: center;
+}
+.tal{
+    text-align: left;
+}
+.tar{
+    text-align: right;
+}
+.tai{
+    text-align: inherit!important;
+}
+.cp{
+    cursor: pointer;
+}
+.psr{
+    position: relative;
+}
+.psa{
+    position: absolute;
+}
+.flex {
+	display: flex;
+}
+.inline-bk {
+	display: inline-block!important;
+}
+.block {
+	display: block!important;
+}
+.none {
+	display: none!important;
+}
+.weight {
+	font-weight: bold;
+}
+.font24 {
+	font-size: 24px;
+}
+.font30 {
+	font-size: 30px;
+}
+.font35 {
+	font-size: 35px;
+}
+.font38 {
+	font-size: 38px;
+}
+.font40 {
+	font-size: 40px;
+}
+.font60 {
+	font-size: 60px;
+}
+.font-style1 {
+	font-family: "锐字锐线怒放黑简1.0";
+}
+.font-style2 {
+	font-family: "锐字锐线怒放黑简1.0";
+	float:right;
+	margin-right:2px;
+	color:#7e9cf3;
+	cursor:pointer;
+}
+.red {
+	color: red;
+}
+.green {
+	color: green;
+}
+.yellow {
+	color: #f8bd09!important;
+}
+.white {
+	color: #fff;
+}
+.orange {
+	color: #ec972c;
+}
+.gray {
+	color: gray;
+}
+.font-c7eda6 {
+	color: #c7eda6!important;
+}
+.font-77d9ff {
+	color: #77d9ff;
+}
+.font-fbd557 {
+	color: #fbd557;
+}
+.font-f4cb6a {
+	color: #f4cb6a;
+}
+.font-e8bb29 {
+	color: #e8bb29;
+}
+.bg-blue {
+	background: #171932;
+}
+.bg-386baf {
+	background: #386baf;
+}
+.pt5 {
+	padding-top: 5px;
+}
+.pt20 {
+	padding-top: 20px;
+}
+.pt60 {
+	padding-top: 60px;
+}
+.pl20 {
+	padding-left: 20px;
+}
+.mt20 {
+	margin-top: 20px;
+}
+.mt30 {
+	margin-top: 30px;
+}
+.mt40 {
+	margin-top: 40px;
+}
+.mt50 {
+	margin-top: 50px;
+}
+.ml20 {
+	margin-left: 20px;
+}
+.ml40 {
+	margin-left: 40px;
+}
+.ml60 {
+	margin-left: 60px;
+}
+.mr10 {
+	margin-right: 10px;
+}
+.mr20 {
+	margin-right: 20px;
+}
+.mr30 {
+	margin-right: 30px;
+}
+.mr40 {
+	margin-right: 40px;
+}
+.mr60 {
+	margin-right: 60px;
+}
+.mr74 {
+	margin-right: 74px;
+}
+.mr80 {
+	margin-right: 80px;
+}
+.mr100 {
+	margin-right: 100px;
+}
+.mb5 {
+	margin-bottom: 5px;
+}
+.mb10 {
+	margin-bottom: 10px;
+}
+.mb20 {
+	margin-bottom: 20px;
+}
+.mb30 {
+	margin-bottom: 30px;
+}
+.mb40 {
+	margin-bottom: 40px;
+}
+.mb45 {
+	margin-bottom: 45px;
+}
+.mb60 {
+	margin-bottom: 60px;
+}
+.mb64 {
+	margin-bottom: 64px;
+}
+.mb65 {
+	margin-bottom: 65px;
+}
+
+/* 设置placeholder文字颜色 */
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: #fff;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #fff;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #fff;
+}
+
+/*滚动条样式1  浅色渐变*/
+.scrollbar-btn::-webkit-scrollbar {  /*滚动条整体部分*/
+	width: 10px;
+	height: 10px;
+}
+.scrollbar-btn::-webkit-scrollbar-button {  /*滚动条两端的按钮*/
+	background-color: #0f212f99;
+}
+.scrollbar-btn::-webkit-scrollbar-track {  /*外层轨道*/
+	background: #11232fa8;
+}
+.scrollbar-btn::-webkit-scrollbar-track-piece {  /*内层轨道*/
+	background: url(http://www.lyblog.net/wp/wp-content/themes/mine/img/stripes_tiny_08.png);
+}
+.scrollbar-btn::-webkit-scrollbar-thumb {  /*滚动条里面可以拖动的那部分*/
+	background: #47616336;
+	border-radius: 4px;
+}
+.scrollbar-btn::-webkit-scrollbar-corner {  /*边角*/
+	background: #1b222f;
+}
+.scrollbar-btn::-webkit-scrollbar-resizer {  /*定义右下角拖动块的样式*/
+	background: #FF0BEE;
+}
+/*滚动条样式2 橙色渐变*/
+.scrollbar-style1::-webkit-scrollbar {  /*滚动条整体部分*/
+	width: 10px;
+	height: 10px;
+}
+.scrollbar-style1::-webkit-scrollbar-button {  /*滚动条两端的按钮*/
+	background-color: #cf8618;
+}
+.scrollbar-style1::-webkit-scrollbar-track {  /*外层轨道*/
+	background: #f5d39f;
+}
+.scrollbar-style1::-webkit-scrollbar-thumb {  /*滚动条里面可以拖动的那部分*/
+	background: #ffbb57;
+	border-radius: 4px;
+}
+.scrollbar-style1::-webkit-scrollbar-corner {  /*边角*/
+	background: #f1d891;
+}
+.scrollbar-style1::-webkit-scrollbar-resizer {  /*定义右下角拖动块的样式*/
+	background: #FF0BEE;
+}
+
+.ztree * {
+	font-size: 30px;
+	font-weight: bold;
+}
+.ztree.myZtree li {
+	line-height: 56px;
+}
+.ztree.myZtree li span {
+	line-height: 56px;
+}
+
+.ztree.myZtree li span.button.roots_close,
+.ztree.myZtree li span.button.root_close,
+.ztree.myZtree span.button.center_close,
+.ztree.myZtree li span.button.bottom_close {
+	width: 40px !important;
+	height: 40px !important;
+	background: url(../img/jtts_tree_icon1.png) !important;
+	background-size: cover !important;
+	margin-right: 22px !important;
+	background-position:0 !important;
+}
+.ztree.myZtree li span.button.roots_open,
+.ztree.myZtree li span.button.root_open,
+.ztree.myZtree li span.button.center_open,
+.ztree.myZtree li span.button.bottom_open {
+	width: 40px !important;
+	height: 40px !important;
+	background-image: url(../img/jtts_tree_icon2.png) !important;
+	background-size: cover !important;
+	margin-right: 22px !important;
+	background-position:0 !important;
+}
+.ztree.myZtree a span.button {
+	background-image: url(../img/jtts_tree_icon3.png) !important;
+	background-size: contain !important;
+	width: 38px !important;
+	height: 48px !important;
+	background-position:0 !important;
+	margin-right: 10px;
+	margin-top:5px;
+}
+/* .ztree.myZtree li span.button {
+	background-image: url(../img/jtts_tree_icon3.png);
+	background-size: contain;
+	width: 38px;
+  height: 48px;
+}
+.ztree.myZtree li span.button.switch {
+	width: 40px;
+	height: 40px;
+	background: url(../img/jtts_tree_icon1.png);
+	background-size: cover;
+	margin-right: 22px;
+}
+.ztree.myZtree li span.button.root_open {
+	width: 40px;
+	height: 40px;
+	background-image: url(../img/jtts_tree_icon2.png);
+	background-size: cover;
+}
+.ztree.myZtree li span.button.bottom_docu,
+.ztree.myZtree li span.button.bottom_open,
+.ztree.myZtree li span.button.center_docu {
+	background-image: url(../img/jtts_tree_icon2.png);
+}
+.ztree.myZtree li span.button.root_open,
+.ztree.myZtree li span.button.ico_close,
+.ztree.myZtree li span.button.ico_docu,
+.ztree.myZtree li span.button.ico_open,
+.ztree.myZtree li span.button.center_docu {
+	background-position: bottom;
+	margin-right: 22px;
+}
+.ztree.myZtree li span.button.ico_docu {
+	display: inline-block;
+  margin-top: 8px;
+}
+.ztree.myZtree li a {
+	height: 56px;
+}
+.ztree.myZtree li a.curSelectedNode {
+	height: 56px;
+	background: none;
+	color: #be7a25!important;
+	border: none;
+	opacity: 1;
+} */

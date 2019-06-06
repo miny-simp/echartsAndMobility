@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+    .zgsj-content {
+      position: absolute;
+      top: 30%;
+      left: 30%;
+      width: 700px;
+      height: 200px;
+      font-weight: bold;
+    }
+    .zgsj-center-img {
+      position: absolute;
+      top: 17%;
+      left: 35%;
+      width: 6.2rem;
+      /* height: 7.2rem; */
+    }
+    .zgsj-left-text {
+      position: absolute;
+      top: 50%;
+      left: 11%;
+    }
+    .zgsj-left-line {
+      position: absolute;
+      top: 56%;
+      left: 28%;
+      width: 2.2rem;
+      height: 0.15rem;
+      background: #79dcc5;
+      transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+    }
+    .zgsj-right-line {
+      position: absolute;
+      top: 35%;
+      left: 60%;
+      width: 2.2rem;
+      height: 0.15rem;
+      background: #5780fd;
+      transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+    }
+    .zgsj-right-text {
+      position: absolute;
+      top: 30%;
+      left: 70%;
+    }
+
+    /* 左下角转圈 */
+    .zgsj-left-text,
+    .zgsj-right-text,
+    .zgsj-left-line,
+    .zgsj-right-line {
+      -webkit-animation: mymove 10s linear infinite;
+      -moz-animation: mymove 10s linear infinite;
+      animation: mymove 10s linear infinite;
+    }
+    @-moz-keyframes mymove {
+      0% { -moz-transform:translate(0,0); }
+      20%{ -moz-transform:translate(0,30px); }
+      40% { -moz-transform:translate(0,-30px); }
+      60% { -moz-transform:translate(-50px,0); }
+      80% { -moz-transform:translate(-50px,30px); }
+      100% { -moz-transform:translate(0,0); }
+    }
+    @-webkit-keyframes mymove {
+      0% { -webkit-transform:translate(0,0); }
+      20% { -webkit-transform:translate(0,30px); }
+      40% { -webkit-transform:translate(0,-30px); }
+      60% { -webkit-transform:translate(-50px,0); }
+      80% { -webkit-transform:translate(-50px,30px);}
+      100% { -webkit-transform:translate(0,0);}
+    }
+    @keyframes mymove {
+      0% {transform:translate(0,0);}
+      20% {transform:translate(0,0.5rem);}
+      40% {transform:translate(0,-0.5rem);}
+      60% {transform:translate(-0.3rem,0);}
+      80% {transform:translate(-0.3rem,0.5rem);}
+      100% {transform:translate(0,0);}
+    }
+    .zgsj-center-img {
+      -webkit-animation: animations2 60s linear infinite;
+      -moz-animation: animations2 60s linear infinite;
+      animation: animations2 60s linear infinite;
+    }
+    @-moz-keyframes animations2{
+      0% { -moz-transform:rotate(0deg); }
+      100% { -moz-transform:rotate(-359deg); }
+    }
+    @-webkit-keyframes animations2{
+      0% { -webkit-transform:rotate(0deg); }
+      100% { -webkit-transform:rotate(-359deg); }
+    }
+    @keyframes animations2{
+      0% { transform:rotate(0deg); }
+      100% { transform:rotate(-359deg); }
+    }
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div class="zgsj-content">
+        <img class="zgsj-center-img" src="img/left_04_img.png" alt="">
+        <div class="zgsj-left-text">
+          <p>破案数量</p>
+          <p id="paCount">234</p>
+        </div>
+        <div class="zgsj-left-line"></div>
+        <div class="zgsj-right-line"></div>
+        <div class="zgsj-right-text">
+          <p>抓获人数</p>
+          <p id="zhCount">213</p>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+  <script>
+    
+    $(function() {
+      
+      
+    })
+
+    
+  </script>
+  </html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div id="mapBox" class="map-content"></div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      var itemData = ['2017年', '2018年', '2019年'],
+      valData1 = [600,900,300,1100,1900],
+      valData2 = [900,1200,1500,1200,1800],
+      valData3 = [800,1800,1000,1450,1800],
+      valData4 = [1100,1800,1000,950,2200],
+      valData5 = [1900,1800,2800,1450,2800],
+      style={
+        "showTitle":true,
+        "title":"近三年数据同环比统计",
+        "legend":['录音', '处警规范', '两拍一传', '短信', '蓝信'],
+        "showLegend":true,
+        "colors1":['#0df8f0','#0df8f0'],  //第一根柱子颜色
+        "colors2":['#f1826c','#f1826c'],  
+        "colors2":['#6548da','#6548da'],
+        "colors2":['#f0e938','#f0e938'],
+        "colors2":['#3a8cd2','#3a8cd2']
+      };
+      creatChart_multi_bar('mapBox', itemData,valData1,valData2,valData3,valData4,valData5,style);
+    })
+    
+
+    var _fontSize = 14;
+    // 多数据对比柱状图
+    function creatChart_multi_bar(id,itemArr,dataArr1,dataArr2,dataArr3,dataArr4,dataArr5,style){
+        echarts.dispose(document.getElementById(id));
+        var myChart = echarts.init(document.getElementById(id));
+        var option = creatChart_multi_bar_option(itemArr,dataArr1,dataArr2,dataArr3,dataArr4,dataArr5,style)
+        myChart.setOption(option);
+    }
+
+    // 多数据对比柱状图option
+    function creatChart_multi_bar_option(itemArr,dataArr1,dataArr2,dataArr3,dataArr4,dataArr5,style){
+      var opt={
+            "showTitle":true,
+            "title":"",
+            "legend":['男', '女'],
+            "showLegend":true
+        };
+        var _barWidth = '7%';
+        $.extend(true, opt, style);
+        var option = {
+            //设置图表标题
+            title:{
+                show:opt.showTitle,
+                text:opt.title,
+                left:'38%',
+                textStyle:{
+                    fontSize:_fontSize,
+                    fontFamily: "迷你简汉真广标",
+                    fontWeight: 100,
+                    color:'#ffffff',
+                    align:'center'
+                }
+            },
+            tooltip: {//鼠标悬浮时显示的信息
+                trigger: 'axis',
+                /*triggerOn:'none',*/
+                axisPointer: {
+                    lineStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 1,
+                            color: 'rgba(122,154,227,0.5)'
+                        }, {
+                            offset: 0.5,
+                            color: 'rgba(115,207,218,0.5)'
+                        }], false),
+                        width:5
+                    }
+                },
+                textStyle: {
+                    fontSize: _fontSize,
+                    color: '#fff'
+                },
+                padding:10,
+                borderWidth:1,
+                borderColor: 'rgba(110,138,203,0.5)',
+                borderRadius:10
+            },
+            legend: {//图例
+                show: opt.showLegend,
+                type: 'scroll',
+                // icon: 'circle',
+                itemWidth: 10,
+                itemHeight: 10,
+                // itemGap: 100,
+                data: opt.legend,
+                bottom: 15,
+                textStyle: {
+                    fontSize: _fontSize,
+                    color: '#fff'
+                },
+                itemStyle: {
+                    normal: {
+                        fontSize:_fontSize,
+                    }
+                }
+            },
+            grid: {//边框
+                top:'5%',
+                left: '2%',
+                right: '2%',
+                bottom: '20%',
+                containLabel: true,
+                show:true,
+                borderWidth:0,
+                borderColor:'rgba(255,255,255,.3)'
+            },
+            xAxis: [{
+                type: 'category',
+                boundaryGap: true,
+                axisLabel:{
+                    margin:10,
+                    //rotate:20,
+                    textStyle:{
+                        color:'#fff',
+                        fontSize:_fontSize,
+                        fontFamily: "迷你简汉真广标"
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        width:2,
+                        color: 'rgba(255,255,255,.3)'
+                    }
+                },
+                splitLine:{
+                    show:false
+                },
+                axisTick:{
+                    show:false
+                },
+                data: itemArr
+            }],
+            yAxis: [{
+                show: false
+            }],
+            series: [{
+                name: opt.legend[0],
+                type: 'bar',
+                barWidth : _barWidth,
+                itemStyle: {
+                    normal: {
+                        color: '#0df8f0',
+                        barBorderRadius:[10, 10, 10, 10]
+                    }
+                  },
+                data: dataArr1
+            },{
+                name: opt.legend[1],
+                type: 'bar',
+                barWidth : _barWidth,
+                barCategoryGap: '5%',
+                itemStyle: {
+                    normal: {
+                        color: '#f1826c',
+                        barBorderRadius:[10, 10, 10, 10]
+                    }
+              },
+                data: dataArr2
+            },{
+                name: opt.legend[2],
+                type: 'bar',
+                barWidth : _barWidth,
+                itemStyle: {
+                    normal: {
+                        color: '#6548da',
+                        barBorderRadius:[10, 10, 10, 10]
+                    }
+              },
+                data: dataArr3
+            },{
+                name: opt.legend[3],
+                type: 'bar',
+                barWidth : _barWidth,
+                itemStyle: {
+                    normal: {
+                        color: '#f0e938',
+                        barBorderRadius:[10, 10, 10, 10]
+                    }
+              },
+                data: dataArr4
+            },{
+                name: opt.legend[4],
+                type: 'bar',
+                barWidth : _barWidth,
+                itemStyle: {
+                    normal: {
+                        color: '#3a8cd2',
+                        barBorderRadius:[10, 10, 10, 10]
+                    }
+              },
+                data: dataArr5
+            }]
+        };
+        return option;
+    }
+
+  </script>
+  </html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>翻转列表+排名动效</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="reset.css" />
+		<link rel="stylesheet" type="text/css" href="_base.css" />
+		<link rel="stylesheet" type="text/css" href="flipInX.css" />
+	</head>
+	<body style="background: #162D43;">
+		<div class="listcont">
+			<ul class="lightLine_list">
+				<li>
+					<p class="animated">NO.1 河南，游客累计18.8万次</p>
+					<div class="lightLine"></div>
+				</li>
+				<li>
+					<p class="animated">NO.2 北京，游客累计15.2万次</p>
+					<div class="lightLine"></div>
+				</li>
+				<li>
+					<p class="animated">NO.3 山东，游客累计13.6万次</p>
+					<div class="lightLine"></div>
+				</li>
+				<li>
+					<p class="animated">NO.4 江苏，游客累计10.8万次</p>
+					<div class="lightLine"></div>
+				</li>
+				<li>
+					<p class="animated">NO.5 上海，游客累计9.6万次</p>
+					<div class="lightLine"></div>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script>
+		slideByX();
+		function slideByX(){
+			$(".lightLine_list .animated").each(function(index){
+				var t = index*100+100;
+				setTimeout(function(){
+					$(".lightLine_list .animated:eq("+index+")").addClass("flipInX");
+				},t);		
+			})
+		}
+		setInterval(function(){
+			$(".lightLine_list .animated").removeClass("flipInX");
+			slideByX();
+		},6000);
+		//千分位分隔
+		function splitThousands(num, fixed) {
+		    if (typeof num !== "number") {
+		        num = parseFloat(num);
+		    }
+		    var reg = /\B(?=(\d{3})+$)/g;
+		    num = num.toString().split(".");
+		    fixed = fixed == undefined ? 2 : fixed;
+
+		    num[0] = num[0].replace(reg, ",");
+		    num[1] = num[1] ? num[1].substr(0, fixed) : "00000000000000000".substr(0, fixed);
+
+		    return fixed ? num.join(".") : num[0];
+		}
+		console.log(splitThousands(1000,0));
+	</script>
+</html>

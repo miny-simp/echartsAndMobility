@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      .content-box {
+        width: 500px;
+        height: 300px;
+        margin: 200px auto;
+      }
+      .lgzs-box ul {
+        width: 100%;  
+        height: 54px;
+        margin-top: 5px;
+      }
+      .lgzs-box ul li {
+        width: 33.3%;
+        float: left;
+        font-weight: bold;
+        text-align: center;
+      }
+      .lgzs-box ul li p {
+        color: #ffffff;
+      }
+      .lgzs-box-count {
+        background: #ee962c;
+        width: 30%;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 20px;
+        margin: 5px auto;
+      }
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div class="content-box">
+        <div class="lgzs-box">
+          <ul>
+            <li>
+              <p>[ 酒店总数 ]</p>
+              <p class="lgzs-box-count" id="lgzs_jdzs">3000</p>
+            </li>
+            <li>
+              <p>[ 旅游人数 ]</p>
+              <p class="lgzs-box-count">3000</p>
+            </li>
+            <li>
+              <p>[ 入住率 ]</p>
+              <p class="lgzs-box-count" id="lgzs_rzl">50%</p>
+            </li>
+          </ul>
+        </div>
+        <div id="jdsjChart"></div>
+      </div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      $('#jdsjChart').height('calc(100% - 54px)');
+      var itemArr = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+      var dataArr1 = [67,23,27,18,23,9,12,45,66,12,0,0];
+      var dataArr2 = [45,12,37,58,12,9,2,5,76,62,51,0];
+      var opt = {
+          "showTitle":false,
+          "title":"",
+          "legend":["今年","去年"],
+          "showLegend": true
+      };
+      createChart_areaLine('jdsjChart',itemArr,dataArr1,dataArr2,opt);
+    })
+    var _fontSize = 14;
+
+    //两条面积折线图--显示同比
+    function createChart_areaLine(id,itemArr,dataArr1,dataArr2,style){
+      var opt = {
+          "showTitle":false,
+          "title":"",
+          "legend":["今日","昨日"],
+          "showLegend":false
+      };
+      $.extend(true, opt, style);
+      echarts.dispose(document.getElementById(id));
+      var myChart = echarts.init(document.getElementById(id));
+      var option = {
+          //设置图表标题
+          title:{
+              show:opt.showTitle,
+              text:opt.title,
+              left:'38%',
+              textStyle:{
+                  fontSize:_fontSize,
+                  fontWeight: 'bold',
+                  color:'#ffffff',
+                  align:'center'
+              }
+          },
+          tooltip: {//鼠标悬浮时显示的信息
+              show:true,
+              trigger: 'axis',
+              axisPointer: {
+                  lineStyle: {
+                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 1,
+                          color: 'rgba(122,154,227,0.5)'
+                      }, {
+                          offset: 0.5,
+                          color: 'rgba(115,207,218,0.5)'
+                      }], false),
+                      width:2
+                  }
+              },
+              textStyle: {
+                  fontSize: _fontSize,
+                  color: '#fff'
+              },
+              padding:10,
+              borderWidth:2,
+              borderColor: 'rgba(110,138,203,0.5)',
+              borderRadius:10,
+              formatter:function(item){
+                  var sb = [];
+                  for(var i = 0; i < item.length; i++) {
+                      var t = item[i];
+                      if(i == 0) {
+                          sb.push(t.name);
+                      }
+                      var color = t.color;
+                      sb.push('<br/>');
+                      sb.push('<span style="display:inline-block;width:10px;height:10px;margin-right:10px;background:' + color + ';border-radius:50%;"></span>');
+                      sb.push(t.seriesName + "：" + t.value);
+                  }
+                  var v = parseInt((item[0].value-item[1].value)/item[1].value*100);
+                  sb.push('<br/>');
+                  sb.push('<span style="display:inline-block;width:10px;height:10px;margin-right:10px;background:#f4717d;border-radius:50%;"></span>');
+                  if(isNaN(v)){
+                      v=0;
+                  }
+                  if(v<0){
+                      sb.push("同比: ↓ " +Math.abs(v)+"%");
+                  }else{
+                      sb.push("同比: ↑ " +Math.abs(v)+"%");
+                  }
+                  return sb.join('');
+              }
+          },
+          legend: {//图例
+              show:opt.showLegend,
+              data: opt.legend,
+              right: '4%',
+              textStyle: {
+                  fontSize: _fontSize,
+                  color: '#fff'
+              }
+          },
+          grid: {//边框
+              top:'15%',
+              left: '5%',
+              right: '5%',
+              bottom: '5%',
+              containLabel: true,
+              show:true,
+              borderWidth:0,
+              borderColor:'rgba(255,255,255,.3)'
+          },
+          xAxis: [{
+              type: 'category',
+              boundaryGap: false,
+              axisLabel:{
+                  margin:10,
+                  textStyle:{
+                      color:'#fff',
+                      fontSize:_fontSize
+                  }
+              },
+              axisLine:{
+                  lineStyle:{
+                      width:2,
+                      color: 'rgba(255,255,255,.3)'
+                  }
+              },
+              splitLine:{
+                  show:false
+              },
+              axisTick:{
+                  show:false
+              },
+              data: itemArr
+          }],
+          yAxis: [{
+              type: 'value',
+              axisTick: {
+                  show: false
+              },
+              axisLabel:{
+                  margin:10,
+                  textStyle:{
+                      color:'#fff',
+                      fontSize:_fontSize
+                  }
+              },
+              axisLine:{
+                  lineStyle:{
+                      width:2,
+                      color: 'rgba(255,255,255,.3)'
+                  }
+              },
+              splitArea:{show:false},
+              splitLine:{
+                  show:false
+              }
+          }],
+          series: [{
+              name: opt.legend[0],
+              type: 'line',
+              smooth: true,
+              symbol:'circle',
+              symbolSize: 8,
+              showSymbol: true,
+              lineStyle: {
+                  normal: {
+                      width: 2,
+                      color: '#dac37d'
+                  }
+              },
+              itemStyle: {
+                  normal: {
+                      color: '#f5c033'
+                  }
+              },
+              areaStyle: {
+                  normal: {
+                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 1,
+                          color: 'rgba(128, 101, 33, 0.2)'
+                      }, {
+                          offset: 0.6,
+                          color: 'rgba(254,240,137, 0.5)'
+                      }], false),
+                      shadowColor: 'rgba(0, 0, 0, 0.1)',
+                      shadowBlur: 10
+                  }
+              },
+              data: dataArr1
+          },{
+              name: opt.legend[1],
+              type: 'line',
+              smooth: true,
+              symbol:'circle',
+              symbolSize: 8,
+              showSymbol: true,
+              lineStyle: {
+                  normal: {
+                      width: 2,
+                      color:'#98d4d6'
+                  }
+              },
+              itemStyle: {
+                  normal: {
+                      color: '#758ec4'
+                  }
+              },
+              areaStyle: {
+                  normal: {
+                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 1,
+                          color: 'rgba(124,152,227, 0.2)'
+                      }, {
+                          offset: 0.6,
+                          color: 'rgba(119,207,218, 0.5)'
+                      }], false),
+                      shadowColor: 'rgba(0, 0, 0, 0.1)',
+                      shadowBlur: 10
+                  }
+              },
+              data: dataArr2
+          }]
+      };
+      myChart.setOption(option);
+      /*
+      * 设置浮动框轮播
+      */
+      var timeTicket = null;
+      timeTicket && clearInterval(timeTicket);
+      var count = 0;
+      var num = dataArr2.length;
+      timeTicket = setInterval(function() {
+          myChart.dispatchAction({
+              type: 'showTip',
+              seriesIndex: 1,
+              dataIndex: count % num
+          });
+          count++;
+      }, 3000);
+    }
+  </script>
+  </html>

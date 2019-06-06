@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div id="mapBox" class="map-content"></div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      var itemData = ["1月", "2月", "3月", "4月", "5月", "6月"];
+	var legendData = ['出入境登记数', '宾馆登记数'];
+	var valData1 = [321, 242, 442, 521, 223, 242];
+	var valData2 = [12, 96, 132, 321, 194, 152];
+	initDataRiverChart("mapBox",itemData,legendData,valData1, valData2);
+    })
+    var _fontSize = 14;
+    //数据湖
+    function initDataRiverChart(id, itemData, legendData, valData1, valData2) {
+      echarts.dispose(document.getElementById(id));
+        var myChart = echarts.init(document.getElementById(id));
+        var option = initDataRiverChart_option(itemData, legendData,valData1, valData2);
+        myChart.setOption(option);
+    }
+    //数据湖option 
+    function initDataRiverChart_option(itemData, legendData,valData1, valData2){
+      var localPath = window.location.href;
+        var spirit = "image://" + localPath.substring(0, localPath.indexOf("/minzzWeb/")) + "/minzzWeb/echartsDemo/img/pic8.svg";
+        var spirit1 = "image://" + localPath.substring(0, localPath.indexOf("/minzzWeb/")) + "/minzzWeb/echartsDemo/img/pic7.svg";
+        var itemFontsize = _fontSize;
+        var lableSize = _fontSize;
+        var symbolSize = [50, 20];
+        var symbolColor = ["#0DAC5D"];
+        var fontColor = '#fff';
+        var option = {
+            tooltip: { //鼠标悬浮时显示的信息
+                show: true,
+                trigger: 'axis',
+                axisPointer: {
+                    lineStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 1,
+                            color: 'rgba(122,154,227,0.5)'
+                        }, {
+                            offset: 0.5,
+                            color: 'rgba(115,207,218,0.5)'
+                        }], false),
+                        width: 1
+                    }
+                },
+                textStyle: {
+                    fontSize: lableSize,
+                    color: '#fff'
+                },
+                padding: 8,
+                borderWidth: 2,
+                borderColor: 'rgba(110,138,203,0.5)',
+                borderRadius: 5,
+                formatter:function(item){
+                    var circle = '';
+                    var sb=[];
+                    var colorArr=['#1383e0','#06caa8'];
+                    for(var i=0;i<item.length;i++){
+                        var t = item[i];
+                        if(i==0){
+                            sb.push(t.name);
+                        }
+                        var color = colorArr[i];
+                        sb.push('<br/>');
+                        sb.push('<span style="display:inline-block;width:10px;height:10px;margin-right:10px;background:'+color+';border-radius:50%;"></span>');
+                        sb.push(t.seriesName+"："+t.value+"人");
+                    }
+                    return sb.join('');
+                }
+            },
+            grid: {
+                top: '30%',
+                left: '12%',
+                right: '5%',
+                bottom: '18%'
+            },
+            legend: {
+                top: 10,
+                right: '2%',
+                orient: 'vertical',
+                textStyle: {
+                    color: fontColor,
+                    fontSize: lableSize,
+                    fontFamily: 'Microsoft YaHei',
+                },
+                data: legendData   //['出入境登记数', '宾馆登记数']
+            },
+            xAxis: {
+                type: 'category',
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        width:2,
+                        color: 'rgba(255,255,255,.3)'
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: fontColor,
+                        fontSize: itemFontsize,
+                        fontFamily: 'Microsoft YaHei'
+                    }
+                },
+                data: itemData
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine:{
+                    lineStyle:{
+                        width:2,
+                        color: 'rgba(255,255,255,.3)'
+                    }
+                },
+                axisLabel: {
+                    margin:10,
+                    textStyle:{
+                        color: fontColor,
+                        fontSize: itemFontsize
+                    }
+                }
+            },
+            series: [{
+                name: legendData[0],  //'出入境登记数',
+                type: 'pictorialBar',
+                symbol: spirit,
+                symbolRepeat: true,
+                symbolClip: true,
+                symbolMargin: '-12%',
+                symbolSize: [50, 40],
+                itemStyle: {
+                    normal: {
+                        opacity: 1
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top',
+                        distance: 0,
+                        textStyle: {
+                            // color: '#1383e0',
+                            color: '#fff',
+                            fontSize: lableSize,
+                            fontFamily: 'Microsoft YaHei'
+                        }
+                    }
+                },
+                data: valData1,
+                z: 10
+            }, {
+                name: legendData[1],  //'宾馆登记数',
+                type: 'pictorialBar',
+                barGap: '-60%',
+                barCategoryGap: '50%',
+                symbol: spirit1,
+                symbolRepeat: true,
+                symbolMargin: '-12%',
+                symbolClip: true,
+                symbolSize: [50, 40],
+                data: valData2,
+                itemStyle: {
+                    normal: {
+                        opacity: 1
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top',
+                        distance: 0, // 距离图形元素的距离
+                        textStyle: {
+                            // color: '#06caa8',
+                            color: '#fff',
+                            fontSize: lableSize,
+                            fontFamily: 'Microsoft YaHei'
+                        }
+                    }
+                },
+                z: 11
+            }],
+            animationEasing:'quadraticIn'
+        };
+        return option;
+    }
+
+  </script>
+  </html>

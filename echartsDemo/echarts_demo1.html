@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+    .jqlx-img {
+      width: 18%;
+      position: absolute;
+      top: 29.8%;
+      left: 41.2%;
+    }
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <img class="jqlx-img" src="img/left_01_center.png" alt="">
+      <div id="mapBox" class="map-content"></div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      var dataArr1 = [
+        {value:185, name:'刑事立案'},
+        {value:125, name:'行政案件'},
+        {value:139, name:'案件'},
+        {value:232, name:'接警'},
+        {value:212, name:'处警'}
+      ],
+      dataArr2 = [
+        {value:185, name:'刑事立案'},
+        {value:285, name:'行政案件'},
+        {value:239, name:'案件'},
+        {value:332, name:'接警'},
+        {value:312, name:'处警'}
+      ],
+        id = 'mapBox',
+        dataArr = dataArr1,
+        dataTitle = '今日';
+        
+      var peiColorArr1=['241,130,108','101,72,218','240,233,56','87,128,253','13,248,240'];//5色圆环
+      var dataArr = [85, 139, 125, 232, 212];
+      var itemArr = ['刑事立案','行政案件','案件','接警','处警'];
+      var data = getDataArr(itemArr,dataArr,peiColorArr1); 
+
+
+      createChart1(id, data, dataTitle);
+    })
+
+    var _fontSize1 = 12;
+    /**
+     * 获取外圈数据数及样式
+     * @param {Array} itemArr 类目数据
+     * @param {Array} dataArr 数据值
+     * @param {Array} colorArr 颜色
+     */
+    function getDataArr(itemArr,dataArr,colorArr){
+      var sb = [];
+      var c = colorArr.length;
+      for(var i=0;i<itemArr.length;i++){
+          var obj = {};
+          obj.value=dataArr[i];
+          obj.name=itemArr[i];
+          var n = i%c;
+          obj.itemStyle={
+              normal:{
+                  color:'rgba('+colorArr[n]+',1)',
+                  label:{
+                      rich:{
+                          hr:{
+                              backgroundColor:'rgba('+colorArr[n]+',1)'
+                          }
+                      }
+                  }
+              }
+          }
+          sb.push(obj);
+      }
+      return sb;
+    }
+    // 饼图
+    function createChart1(id, dataArr, dataTitle) {
+      var myChart = echarts.init(document.getElementById(id));
+      var option = {
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)",
+          textStyle: {
+              fontSize: _fontSize1,
+              color: '#fff'
+          },
+          padding: 5,
+          borderWidth: 2,
+          borderColor: 'rgba(110,138,203,0.5)',
+          borderRadius: 10
+        },
+        series: [
+          {
+            name: dataTitle,
+            type:'pie',
+            center: ['50%', '48%'],
+            radius: ['45%', '60%'],
+            itemStyle :　{
+              normal : {
+                label : {
+                  show : true,
+                  textStyle : {
+                    color : '#fff',
+                    align : 'center',
+                    baseline : 'bottom',
+                    fontFamily : 'Microsoft YaHei',
+                    fontSize : _fontSize1
+                  },
+                  formatter: "{b}: {c}",
+                  labelLine : {
+                    show : true,
+                    length : 15,
+                    length2 : 45,
+                    lineStyle : {
+                        color : 'rgba(255,255,255,0.5)',
+                        width : 4,
+                        type : 'solid'
+                    }
+                  }
+                }
+              }
+            },
+            data: dataArr
+          }
+        ]
+      };
+      myChart.setOption(option);
+      return;
+      /*
+        * 设置浮动框轮播
+        */
+      var timeTicket = null;
+      timeTicket && clearInterval(timeTicket);
+      var count=0;
+      var num = dataArr.length;
+      timeTicket = setInterval(function() {
+          myChart.dispatchAction({
+              type: 'downplay',
+              seriesIndex: 2
+          });
+          myChart.dispatchAction({
+              type: 'highlight',
+              seriesIndex: 2,
+              dataIndex: count % num
+          });
+          /* myChart.dispatchAction({
+              type: 'showTip',
+              seriesIndex: 0,
+              dataIndex: count % num
+          });*/
+          count++;
+      }, 3000);
+    }
+
+    
+  </script>
+  </html>

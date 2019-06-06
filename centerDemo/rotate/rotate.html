@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>背景旋转</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/reset.css" />
+	</head>
+	<style>
+		/*圆圈*/
+		.circle{
+			display:inline-block;
+			width:310px;
+			height:310px;
+			background:url(img/icon_circle_bg.png) no-repeat;
+			-webkit-animation:animations 20s linear infinite;
+			-moz-animation:animations 20s linear infinite;
+			animation:animations 20s linear infinite;
+		}
+		@-webkit-keyframes animations{
+		    0% { -webkit-transform:rotate(0deg); }
+			100% { -webkit-transform:rotate(359deg); }
+		}
+		@-moz-keyframes animations{
+		    0% { -moz-transform:rotate(0deg); }
+			100% { -moz-transform:rotate(359deg); }
+		}
+		@keyframes animations{
+			0% { transform:rotate(0deg); }
+			100% { transform:rotate(359deg); }
+		}
+		.yjgz-ul{
+			margin:0px;
+			padding:0px;
+			overflow:hidden;
+		}
+		.yjgz-ul>li{
+			float:left;
+			width:25%;
+			text-align:center;
+			position:relative;
+			margin:30px 0px;
+			cursor:pointer;
+		}
+		.yjgz-ul>li .icon-div{
+			position:absolute;
+			top:0px;
+			left:0px;
+			width:100%;
+			height:310px;
+			text-align:center;
+			line-height:380px;
+		}
+		.yjgz-ul>li .text{
+			margin:0;
+			font-family:"微软雅黑";
+			font-size:65px;
+			color:#fff;
+		}
+		.yjgz-ul>li .count{
+			margin:0;
+			font-family:"微软雅黑";
+			font-size:80px;
+			color:#f7be33;
+		}
+	</style>
+	<body style="background: #040D1B;padding-top:100px;">
+		<div style="width:50%;margin:0 auto;zoom:0.4">
+			<ul class="yjgz-ul" id="yjgz-list">
+				<li>
+					<a href="#zyjq">
+						<span class="circle"></span>
+						<div class="icon-div">
+							<img src="img/icon_yjgz1.png"/>
+						</div>
+						<p class="text">重要警情</p>
+						<p class="count" id="jq_count">0</p>
+					</a>
+				</li>
+				<li>
+					<a href="#zytz">
+						<span class="circle"></span>
+						<div class="icon-div">
+							<img src="img/icon_yjgz2.png"/>
+						</div>
+						<p class="text">重要通知</p>
+						<p class="count" id="qb0_count">4</p>
+					</a>
+				</li>
+				<li>
+					<a href="#hycd">
+						<span class="circle"></span>
+						<div class="icon-div">
+							<img src="img/icon_yjgz3.png"/>
+						</div>
+						<p class="text">会议传达</p>
+						<p class="count" id="qb1_count">2</p>
+					</a>
+				</li>
+				<li>
+					<a href="#zyqb">
+						<span class="circle"></span>
+						<div class="icon-div">
+							<img src="img/icon_yjgz4.png"/>
+						</div>
+						<p class="text">重要情报</p>
+						<p class="count" id="qb2_count">2</p>
+					</a>
+				</li>
+				<li>
+					<a href="#pwbd">
+						<span class="circle"></span>
+						<div class="icon-div">
+							<img src="img/icon_yjgz5.png"/>
+						</div>
+						<p class="text">票务比对</p>
+						<p class="count" id="qb3_count">34</p>
+					</a>
+				</li>
+				<li>
+					<a href="#tzyj">
+						<span class="circle"></span>
+						<div class="icon-div">
+							<img src="img/icon_yjgz6.png"/>
+						</div>
+						<p class="text">台账移交</p>
+						<p class="count" id="qb4_count">18</p>
+					</a>
+				</li>
+				<li>
+					<a href="#zdyj">
+						<span class="circle"></span>
+						<div class="icon-div">
+							<img src="img/icon_yjgz7.png"/>
+						</div>
+						<p class="text">重点移交</p>
+						<p class="count" id="qb5_count">6</p>
+					</a>
+				</li>
+				<li>
+					<a href="#gzyq">
+						<span class="circle"></span>
+						<div class="icon-div">
+							<img src="img/icon_yjgz8.png"/>
+						</div>
+						<p class="text">关注舆情</p>
+						<p class="count" id="yq_count">0</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script>
+		$(function(){
+			
+		})
+		
+	</script>
+</html>

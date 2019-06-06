@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div id="mapBox" class="map-content"></div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      var itemData=['1月', '2月', '3月', '4月', '5月', '6月'];
+      //测试数据
+      var valData=[810, 790, 659, 612, 486, 321];
+      creatChart_bar("mapBox",itemData,valData);
+    })
+    
+    var _fontSize = 14;
+    //单独的柱状图
+    function creatChart_bar(id, itemData, valData) {
+        var myChart = echarts.init(document.getElementById(id));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    lineStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 1,
+                            color: 'rgba(122,154,227,0.5)'
+                        }, {
+                            offset: 0.5,
+                            color: 'rgba(115,207,218,0.5)'
+                        }], false),
+                        width: 1
+                    }
+                },
+                textStyle: {
+                    fontSize: _fontSize,
+                    color: '#fff'
+                },
+                padding: 6,
+                borderWidth: 2,
+                borderColor: 'rgba(110,138,203,0.5)',
+                borderRadius: 5,
+                formatter: '{b}：{c1}'
+            },
+            grid: {
+                top: '10%',
+                left: '17%',
+                right:'5%',
+                bottom:'15%'
+            },
+            xAxis: [{
+                type: 'category',
+                data: itemData,
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#ffffff',
+                        fontSize: _fontSize
+                    }
+                    // ,
+                    // formatter: function(value) {
+                    //     return value.split("").join("\n");
+                    // }
+                },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              width: 2,
+              color: 'rgba(255,255,255,.3)'
+            }
+          }
+            }],
+            yAxis: [{
+                type: 'value',
+                axisTick: {
+            show: false
+          },
+          axisLabel: {
+            margin: 15,
+            formatter: '{value}',
+            textStyle: {
+              color: '#fff',
+              fontSize: _fontSize
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              width: 2,
+              color: 'rgba(255,255,255,.3)'
+            }
+          },
+          splitArea: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          }
+            }],
+            series: [{
+                type: 'bar',
+    //			symbol: spirit,
+    //			symbolRepeat: false,
+                animation:true,
+    //			symbolMargin: '10%', //图形的两边间隔（『两边』是指其数值轴方向的两边）
+                itemStyle: {
+                    normal: {
+                        color: 'rgba(53,124,157,0.2)'
+                    }
+                },
+                silent: true,
+                barWidth: '50%',
+                barGap: '-100%', // Make series be overlap
+                data: [1000, 1000, 1000, 1000, 1000, 1000]
+            }, {
+                type: 'bar',
+                barWidth: '50%',
+                z: 10,
+                data: valData,
+                itemStyle: {
+                    normal: {
+    //					barBorderRadius: 5,
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: '#88f3e8'
+                                },
+                                {
+                                    offset: 1,
+                                    color: '#44d4c5'
+                                }
+                            ]
+                        )
+
+                    }
+                }
+            }],
+            animationEasing:'quadraticIn'
+        };
+        myChart.setOption(option);
+        /*
+        * 设置浮动框轮播
+        */
+        var timeTicket = null;
+        timeTicket && clearInterval(timeTicket);
+        var count = 0;
+        var num = 11;
+        timeTicket = setInterval(function() {
+            myChart.dispatchAction({
+                type: 'showTip',
+                seriesIndex: 0,
+                dataIndex: count % num
+            });
+            count++;
+        }, 3000);
+    }
+  </script>
+  </html>

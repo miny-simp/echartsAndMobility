@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div id="mapBox" class="map-content"></div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      var itemData = ['7月', '8月', '9月', '10月', '11月', '12月', '1月', '2月', '3月', '4月', '5月', '6月'];
+      var valData = [680, 581, 489, 543, 689, 789, 810, 790, 659, 612, 486, 321];
+      creatChart_line_bar("mapBox",itemData,valData);
+    })
+    var _fontSize = 14;
+    //带线的柱状图
+    function creatChart_line_bar(id, itemArr, dataArr) {
+      echarts.dispose(document.getElementById(id));
+      var myChart = echarts.init(document.getElementById(id));
+      var option = creatChart_line_bar_option(itemArr, dataArr);
+      myChart.setOption(option);
+    }
+
+    //带线的柱状图-option
+    function creatChart_line_bar_option(itemArr, dataArr){
+      var option = {
+        tooltip: { //鼠标悬浮时显示的信息
+          show: true,
+          trigger: 'axis',
+          axisPointer: {
+            lineStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 1,
+                color: 'rgba(122,154,227,0.5)'
+              }, {
+                offset: 0.5,
+                color: 'rgba(115,207,218,0.5)'
+              }], false),
+              width: 1
+            }
+          },
+          textStyle: {
+            fontSize: _fontSize,
+            color: '#fff'
+          },
+          padding: 12,
+          borderWidth: 2,
+          borderColor: 'rgba(110,138,203,0.5)',
+          borderRadius: 10,
+          formatter:function(item){
+              var sb = [];
+              var t = item[1];
+              sb.push(t.name);
+              var color = t.color;
+              //sb.push('<br/>');
+              //sb.push('<span style="display:inline-block;width:15px;height:15px;margin-right:10px;background:' + color + ';border-radius:50%;"></span>');
+              sb.push(t.seriesName + ":" + t.value);
+              //sb.push('<br/>');
+              return sb.join('');
+          }
+        },
+        legend: { //图例
+          show: false
+        },
+        grid: { //边框
+          top: '15%',
+          left: '2%',
+          right: '2%',
+          bottom: '3%',
+          containLabel: true,
+          show: true,
+          borderWidth: 0,
+          borderColor: 'rgba(255,255,255,.3)'
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: true,
+          axisLabel: {
+            margin: 15,
+            textStyle: {
+              color: '#fff',
+              fontSize: _fontSize
+            },
+            interval:0
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              width: 2,
+              color: 'rgba(255,255,255,.3)'
+            }
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          data: itemArr
+          
+        },
+        yAxis: {
+          type: 'value',
+    //			name: "警种数/种",
+    //			nameTextStyle: {
+    //				color: '#869bf5',
+    //				padding: 10,
+    //				fontSize: 30,
+    //				fontWeight: 'bold'
+    //			},
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            margin: 15,
+            formatter: '{value}',
+            textStyle: {
+              color: '#fff',
+              fontSize: _fontSize
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              width: 2,
+              color: 'rgba(255,255,255,.3)'
+            }
+          },
+          splitArea: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          }
+        },
+        series: [{
+          name: '',
+          type: 'line',
+          smooth: true,
+          /*symbol: 'circle',*/
+          symbolSize: 8,
+          showSymbol: true,
+    //			yAxisIndex: 1,
+          lineStyle: {
+            normal: {
+              width: 2,
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 1,
+                color: 'rgba(128,101,33,.5)'
+              }, {
+                offset: 0.5,
+                color: 'rgba(254,240,137,.5)'
+              }], false)
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: '#fff',
+              borderColor: '#f7be33',
+              borderWidth: 2
+
+            }
+          },
+          areaStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 1,
+                color: 'rgba(128, 101, 33, 0.2)'
+              }, {
+                offset: 0.6,
+                color: 'rgba(254,240,137, 0.5)'
+              }], false),
+              shadowColor: 'rgba(0, 0, 0, 0.1)',
+              shadowBlur: 10
+            }
+          },
+          data: dataArr
+        }, {
+          name: '',
+          type: 'bar',
+          barWidth: '40%',
+          itemStyle: {
+            normal: {
+              color: '#869bf5'
+            }
+          },
+          label: {
+            normal: {
+              show: true,
+              position: 'top',
+              //distance: 40,
+              textStyle: {
+                color: '#fff',
+                fontSize: _fontSize,
+                fontFamily: 'Microsoft Yahei',
+                fontWeight: 600
+                //fontFamily:'MagistralBlackC'
+              }
+            }
+          },
+          data: dataArr
+        }],
+        animationEasing:'quadraticIn'
+      };
+      return option;
+    }
+
+  </script>
+  </html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+		<link rel="stylesheet" href="../css/index.css" />
+		<link rel="stylesheet" href="css/circleAnimate.css" />
+  </head>
+	<body>
+    <div class="content-page">
+      <div class="map-content">
+        <div class="center-list-top">
+          <div class="center-cont-top-bg"></div>
+          <div class="zyzs-box">
+            <span class="zyzs-name">资源总数：</span>
+            <span class="zyzs-num">0</span>
+            <span class="zyzs-num">0</span>
+            <span class="zyzs-num">3</span>
+            <span class="zyzs-num">1</span>
+            <span class="zyzs-num">9</span>
+            <span class="zyzs-num">0</span>
+            <span class="zyzs-num">0</span>
+            <span class="zyzs-num">3</span>
+            <span class="zyzs-dot">.</span>
+            <span class="zyzs-num">1</span>
+            <span class="zyzs-num">9</span>
+          </div>
+          <div class="zdry-count">
+            <img class="warning-icon" src="img/circle/left_center_img6.png" alt="">
+            涉及国家安全重点人员：<span>32人</span>
+          </div>
+          <div class="center-circle">
+            <ul class="bg-box">
+              <li class="circle3d">
+                <img class="circle-img1" src="img/circle/circle_1_01.png" width="1020">
+              </li>
+              <li class="circle3d">
+                <img class="circle-img1" src="img/circle/circle_1_02.png" width="750">
+              </li>
+              <li class="circle-parent">
+                <div class="circle3dRe">
+                  <img class="circle-img1 circle-img2" src="img/circle/circle_1_03.png" width="580">
+                </div>
+                <ul class="floatBtn-list" id="floatBtn-list">
+                  <li class="child1" id="child1">
+                    <span class="floatBtnBg on">
+                      <i class="num">01</i>
+                      <i class="text">全部</i>
+                    </span>
+                    <div class="line-box">
+                      <p class="line">
+                        <span class="line-dot"></span>
+                      </p>
+                    </div>
+                  </li>
+                  <li class="child2">
+                    <span class="floatBtnBg floatBtnBg1">
+                      <i class="num">02</i>
+                      <i class="text">民航</i>
+                    </span>
+                    <div class="line-box">
+                      <p class="line"><span class="line-dot"></span></p>
+                    </div>
+                  </li>
+                  <li class="child3">
+                    <span class="floatBtnBg floatBtnBg1">
+                      <i class="num">03</i>
+                      <i class="text">客运</i>
+                    </span>
+                    <div class="line-box">
+                      <p class="line"><span class="line-dot"></span></p>
+                    </div>
+                  </li>
+                  <li class="child4">
+                    <span class="floatBtnBg floatBtnBg2">
+                      <i class="num">04</i>
+                      <i class="text">铁路</i>
+                    </span>
+                    <div class="line-box">
+                      <p class="line"><span class="line-dot"></span></p>
+                    </div>
+                  </li>
+                  <li class="child5">
+                    <span class="floatBtnBg floatBtnBg2">
+                      <i class="num">05</i>
+                      <i class="text">人脸识别</i>
+                    </span>
+                    <div class="line-box">
+                      <p class="line"><span class="line-dot"></span></p>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li class="circle3dRe">
+                <img class="circle-img1" src="img/circle/circle_1_04.png" width="480">
+              </li>
+              <li class="house">
+                <img src="img/circle/left_center_circle1.png">
+              </li>
+            </ul>
+          </div>
+          <div class="today-count">当日感知总数：81/条 同比<span> ↑ 20%</span></div>
+          <div class="center-cont-bottom-bg"></div>
+        </div>
+      </div>
+      
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+  <script src="js/circleAnimate.js" ></script>
+  <script>
+  $(function() {
+    // 中间 资源总数
+    var resourceList = ['全部','民航','客运','铁路','人脸识别','网吧','卡口抓拍','旅馆'];
+    // var resourceList = [];
+    function totalResources() {
+      // 圆圈 居中显示
+      var w1 = $('.map-content').width(),
+      w2 = $('.bg-box').width(),
+      w3 = (w1-w2)/2;
+      $('.bg-box').css('left', w3 - 10 + 'px');
+
+      hsyjShowInit();
+    }
+    // 获取li的选中项
+    function hsyjShowInit() {
+      $('#floatBtn-list').find('li').each(function() {
+        if($(this).children(':first').hasClass('on')) {
+          var name = $(this).children().children().eq(1).text();
+          dyyjDataDisplay(name);
+        }
+      })
+    }
+    // 不同类型人员数据展示
+    function dyyjDataDisplay(name) {
+        var obj = {};
+        if(name === 0) {
+            obj = resourceList[0].count;
+        }
+        var dyyjCount = obj.by;
+        var dyyjPercent = obj.tb;
+        $('#dyyjCount').text(dyyjCount);
+        var hb = '↑'; 
+        $("#dyyjPercent").css('color','red');
+        if(dyyjPercent < 0){
+            hb = '↓';
+          $("#dyyjPercent").css('color','green');
+        } 
+        $("#dyyjPercent").html(hb+parseFloatTo(Math.abs(dyyjPercent*100),1)+"%");
+    }
+  })
+  </script>
+  </html>

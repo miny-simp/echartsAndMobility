@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+		<link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      
+    </style>
+	</head>
+	<body>
+    <div class="content-page">
+      <div id="mapBox" class="map-content"></div>
+    </div>
+  </body>
+  <script src="../js/common/jquery.min.js" ></script>
+	<script src="../echart/echarts-3.8.4.js" ></script>
+  <script>
+    $(function() {
+      var dataArr = [
+        {
+          value:[200,700,1200,1700,2000],
+          name: '2018年'
+        },{
+          value:[500,800,1300,1800,2100],
+          name: '2017年'
+        },{
+          value:[800,900,1400,1900,2800],
+          name: '2016年'
+        },{
+          value:[900,1500,1500,2000,3000],
+          name: '2015年'
+        },{
+          value:[1200,1900,1600,2150,4000],
+          name: '2014年'
+        }
+      ],
+      radarList = [
+        { text: '录音数据', max: 2034},
+        { text: '处警规范条数', max: 2234},
+        { text: '蓝信消息指令数', max: 1934},
+        { text: '短信消息指令数', max: 4234},
+        { text: '两拍一传图片', max: 5400}
+      ],
+      dataTitle = '全年总量统计',
+      id1 = 'mapBox';
+      createChart2(id1, dataArr, radarList, dataTitle);
+    })
+      var _fontSize = 14;
+    // 雷达图
+    var jwfwList = ['录音', '处警规范', '两拍一传', '短信', '蓝信'];
+    function createChart2(id, dataArr, radarList, dataTitle) {
+      var myChart = echarts.init(document.getElementById(id));
+      var option = {
+        title: {
+          text: dataTitle,
+          left: 'center',
+          textStyle: {
+            fontSize:_fontSize,
+            fontFamily: "迷你简汉真广标",
+            fontWeight: 100,
+            color: '#fff'
+          }
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: function (params) { 
+            var valueList = params.value,
+            sb = [],
+            valueName = params.name;
+            sb.push(valueName + '：');
+            // sb.push('<br/>');
+            for(var i = 0; i < valueList.length; i++) {
+              sb.push('<br/>');
+              sb.push(jwfwList[i] + "：" + valueList[i]);
+            }
+            for(var j = 0; j < dataArr.length; j++) {
+              if(valueName === dataArr[j].name) {
+                var v = parseInt((dataArr[j].value-dataArr[j-1].value)/dataArr[j-1].value*100);
+                var v = parseInt((dataArr[j].value-dataArr[j-1].value)/dataArr[j-1].value*100);
+              }
+            }
+            sb.push('<br/>');
+            if(isNaN(v)){
+                v=0;
+            }
+            if(v<0){
+                sb.push("<span style='color: #ef3123;'>同比： ↓ " + Math.abs(v)+"%</span>");
+            }else{
+                sb.push("<span style='color: #ef3123;'>同比： ↑ " + Math.abs(v)+"%</span>");
+            }
+            return sb.join('');
+          },
+          textStyle: {
+              fontSize: _fontSize,
+              color: '#fff'
+          },
+          padding: 5,
+          borderWidth: 2,
+          borderColor: 'rgba(110,138,203,0.5)',
+          backgroundColor : 'rgba(27, 38, 54, 0.8)',
+          borderRadius: 10
+        },
+        visualMap: {
+            top: 'middle',
+            // top: 0,
+            right: 2,
+            color: ['red', 'yellow'],
+            // inRange: {
+            //   color: ['yellow', 'red'],
+            //   symbolSize: [200, 2000]
+            // },
+            calculable: true  // 是否显示拖拽用的手柄
+        },
+        radar: {
+          name: {
+            textStyle: {
+              color: '#fff',
+              fontSize: 14
+            },
+            formatter: function (value, indicator) {
+              return  indicator.max + '\n' + value;
+            }
+          },
+          indicator : radarList,
+          radius: '36%', // 半径
+          center: ['50%','50%']  // 中心（圆心）坐标
+        },
+        series : [{
+          name: dataTitle,
+          type: 'radar',
+          symbol: 'none',
+          lineStyle: {
+            width: 1
+          },
+          emphasis: {
+            areaStyle: {
+              color: 'rgba(0,250,0,0.3)'
+              // color: 'rgba(23, 32, 46, 0.35)'
+            }
+          },
+          data: dataArr
+        }]
+      };
+      myChart.setOption(option);
+    }
+
+  </script>
+  </html>

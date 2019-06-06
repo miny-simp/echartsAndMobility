@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <title>minzz 前端demo</title>
+    <link rel="stylesheet" href="layui/css/layui.css" />
+		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/index.css" />
+	</head>
+	<body>
+    <div class="lay-blog">
+      <div class="header">
+        <div class="header-wrap">
+          <h1 class="logo pull-left">
+            <a href="index.html">
+              <img src="images/logo.png" alt="" class="logo-img">
+              <img src="images/logo-text.png" alt="" class="logo-text">
+            </a>
+          </h1>
+          <form class="layui-form blog-seach pull-left" action="">
+            <div class="layui-form-item blog-sewrap">
+                <div class="layui-input-block blog-sebox">
+                  <i class="layui-icon layui-icon-search"></i>
+                  <input type="text" name="title" lay-verify="title" autocomplete="off"  class="layui-input">
+                </div>
+            </div>
+          </form>
+          <div class="blog-nav pull-right">
+            <ul class="layui-nav pull-left">
+              <li class="layui-nav-item"><a href="index.html">统计图</a></li>
+              <li class="layui-nav-item"><a href="map.html">地图</a></li>
+              <li class="layui-nav-item layui-this"><a href="center.html">动态效果</a></li>
+            </ul>
+            <a href="#" class="personal pull-left">
+              <i class="layui-icon layui-icon-username"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="container-wrap">
+        <div class="container">
+          <div class="layui-collapse">
+            <!-- 五大类转圈轮播 -->
+            <div class="layui-colla-item">
+              <h2 class="layui-colla-title">五大类转圈轮播</h2>
+              <div class="layui-colla-content layui-show">
+                <a href="centerDemo/center_circle3D.html" target="_blank">
+                  <img src="images/center_demo1.png" alt="">
+                </a>
+              </div>
+            </div>
+            <!-- demo2 -->
+            <div class="layui-colla-item">
+              <h2 class="layui-colla-title">上下移动 中间转圈</h2>
+              <div class="layui-colla-content layui-show">
+                <a href="centerDemo/echarts_circleLine2D.html" target="_blank">
+                  <img src="images/center_demo2.png" alt="">
+                </a>
+              </div>
+            </div>
+            <!-- demo -->
+            <div class="layui-colla-item">
+              <h2 class="layui-colla-title">列表排名+翻转动效</h2>
+              <div class="layui-colla-content layui-show">
+                <a href="centerDemo/lightLine/lightLine.html" target="_blank">
+                  <img src="images/center_demo3.png" alt="">
+                </a>
+              </div>
+            </div>
+            <!-- demo -->
+            <div class="layui-colla-item">
+              <h2 class="layui-colla-title">大屏动效</h2>
+              <div class="layui-colla-content layui-show">
+                <a href="centerDemo/centerPop/centerPop.html" target="_blank">
+                  <img src="images/center_demo4.png" alt="">
+                </a>
+              </div>
+            </div>
+            <!-- demo -->
+            <div class="layui-colla-item">
+              <h2 class="layui-colla-title">列表滚动+翻转</h2>
+              <div class="layui-colla-content layui-show">
+                <a href="centerDemo/scrollList3D/scrollList3D.html" target="_blank">
+                  <img src="images/center_demo5.png" alt="">
+                </a>
+              </div>
+            </div>
+            <!-- demo -->
+            <div class="layui-colla-item">
+              <h2 class="layui-colla-title">背景圆圈360度无效旋转</h2>
+              <div class="layui-colla-content layui-show">
+                <a href="centerDemo/rotate/rotate.html" target="_blank">
+                  <img src="images/center_demo6.png" alt="">
+                </a>
+              </div>
+            </div>
+            <!-- demo -->
+          </div>
+				</div>
+      </div>
+    </div>	
+  </body>
+  <script src="js/common/jquery.min.js" ></script>
+	<script src="layui/layui.all.js" ></script>
+  </html>
